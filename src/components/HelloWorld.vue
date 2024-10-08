@@ -15,14 +15,14 @@ onMounted(() => {
 
   wv = WaveSurfer.create({
     container: waveformRef.value,
-    waveColor: 'rgb(200, 0, 200)',
-    progressColor: 'rgb(100, 0, 100)',
+    waveColor: '#6ee7b7',
+    progressColor: '#065f46',
     media: videoRef.value,
     dragToSeek: true,
     hideScrollbar: true,
     plugins: [
       Hover.create({
-        lineColor: '#ff0000',
+        lineColor: '#b91c1c',
         lineWidth: 2,
         labelBackground: '#555',
         labelColor: '#fff',
@@ -37,6 +37,8 @@ onMounted(() => {
       wv!.zoom(minPxPerSec)
     })
   })
+
+  wv.on('click', () => (currentScroll = wv!.getCurrentTime()))
 })
 
 let currentScroll = 0
@@ -50,7 +52,6 @@ onKeyStroke(' ', async () => {
     wv.setOptions({ autoCenter: true, autoScroll: true })
   } else {
     wv.play()
-    currentScroll = wv.getCurrentTime()
   }
 })
 
@@ -63,22 +64,27 @@ watch(currentSpeed, (speed) => {
 </script>
 
 <template>
-  <div class="max-h-full w-full flex flex-col justify-center">
+  <div class="max-h-full w-full flex flex-col justify-center text-white">
     <div class="flex justify-center">
       <video ref="videoRef" src="/video.webm?url" class="max-w-7xl" />
     </div>
     <div ref="waveformRef" class="mx-8"></div>
 
-    <div class="mx-8 my-4">
-      <input ref="sliderRef" type="range" min="10" max="1000" step="1" />
-    </div>
+    <div class="flex mx-8 my-4 gap-8 justify-end">
+      <div>
+        <label>
+          <div class="font-bold text-sm">Zoom</div>
+          <input ref="sliderRef" type="range" min="1" max="500" step="1" />
+        </label>
+      </div>
 
-    <div class="mx-8 my-4">
-      <label>
-        0.25x
-        <input type="range" min="0" max="3" step="1" v-model="currentSpeed" />
-        4x
-      </label>
+      <div>
+        <label>
+          <div class="font-bold text-sm">Speed</div>
+          <input type="range" min="0" max="3" step="1" v-model="currentSpeed" />
+          {{ speeds[currentSpeed] }}x
+        </label>
+      </div>
     </div>
   </div>
 </template>

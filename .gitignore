@@ -28,3 +28,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# ignore video files (used in dev)
+public/*.webm
+public/*.mkv
