@@ -65,26 +65,26 @@ watch(currentSpeed, (speed) => {
 
 <template>
   <div class="max-h-full w-full flex flex-col justify-center text-white">
-    <div class="flex justify-center">
-      <video ref="videoRef" src="/video.webm?url" class="max-w-7xl" />
+    <div class="flex justify-center relative">
+      <video ref="videoRef" src="/video.mkv?url" class="max-w-screen" />
+
+      <div class="flex gap-8 justify-end absolute bottom-0 right-0">
+        <div>
+          <label>
+            <div class="font-bold text-sm">Zoom</div>
+            <input ref="sliderRef" type="range" min="1" max="500" step="1" />
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <div class="font-bold text-sm">Speed</div>
+            <input type="range" min="0" max="3" step="1" v-model="currentSpeed" />
+            {{ speeds[currentSpeed] }}x
+          </label>
+        </div>
+      </div>
     </div>
     <div ref="waveformRef" class="mx-8"></div>
-
-    <div class="flex mx-8 my-4 gap-8 justify-end">
-      <div>
-        <label>
-          <div class="font-bold text-sm">Zoom</div>
-          <input ref="sliderRef" type="range" min="1" max="500" step="1" />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          <div class="font-bold text-sm">Speed</div>
-          <input type="range" min="0" max="3" step="1" v-model="currentSpeed" />
-          {{ speeds[currentSpeed] }}x
-        </label>
-      </div>
-    </div>
   </div>
 </template>
